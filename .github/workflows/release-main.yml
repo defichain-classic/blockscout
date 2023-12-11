@@ -4,10 +4,19 @@
 # documentation.
 
 name: Release main
-
 on:
-  release:
-    types: [published]
+    workflow_dispatch:
+        inputs:
+            tags:
+                description: Image tags
+                required: false
+                type: string
+    workflow_call:
+        inputs:
+            tags:
+                description: Image tags
+                required: false
+                type: string
 
 env:
   OTP_VERSION: '25.2.1'
