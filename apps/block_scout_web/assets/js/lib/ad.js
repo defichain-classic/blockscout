@@ -34,7 +34,7 @@ function adjustPaddingForTextAd (showAd, data) {
 
 function getTextAdData () {
   return new Promise((resolve) => {
-    const displayAd = showAd()
+    /*const displayAd = showAd()
     if (displayAd) {
       $.get('https://request-global.czilladx.com/serve/native.php?z=19260bf627546ab7242', function (data) {
         if (!data) {
@@ -59,14 +59,16 @@ function getTextAdData () {
         }
       })
     } else {
-      adjustPaddingForTextAd(displayAd, false)
-      resolve({ data: null, inHouse: null })
-    }
+    */
+   const displayAd = false;
+   adjustPaddingForTextAd(displayAd, false)
+   resolve({ data: null, inHouse: null })
+   // }
   })
 }
 
 function fetchTextAdData () {
-  if (showAd()) {
+  /*if (showAd()) {
     getTextAdData()
       .then(({ data, inHouse }) => {
         if (data) {
@@ -87,7 +89,7 @@ function fetchTextAdData () {
           countImpressions(impressionUrl)
         }
       })
-  }
+  }*/
 }
 
 function getRandomInt (min, max) {
