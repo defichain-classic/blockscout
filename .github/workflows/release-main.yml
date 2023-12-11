@@ -46,7 +46,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: defichain-classic/blockscout
+          images: ghcr.io/defichain-classic/blockscout
 
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
@@ -54,9 +54,9 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
-          cache-from: type=registry,ref=defichain-classic/blockscout:buildcache
-          cache-to: type=registry,ref=defichain-classic/blockscout:buildcache,mode=max
-          tags: defichain-classic/blockscout:latest, defichain-classic/blockscout:${{ env.RELEASE_VERSION }}
+          cache-from: type=gha
+          tags: ${{ inputs.tags || steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           platforms: |
             linux/amd64
             linux/arm64/v8
