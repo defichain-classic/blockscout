@@ -18,7 +18,20 @@ defmodule EthereumJSONRPC.Geth do
   To signal to the caller that fetching is not supported, `:ignore` is returned.
   """
   @impl EthereumJSONRPC.Variant
-  def fetch_beneficiaries(_block_range, _json_rpc_named_arguments), do: :ignore
+  def fetch_beneficiaries(block_numbers, json_rpc_named_arguments)
+      when is_list(block_numbers) and is_list(json_rpc_named_arguments) do
+    id_to_params =
+      block_numbers
+      |> block_numbers_to_params_list()
+      |> id_to_params()
+
+    with {:ok, responses} <-
+           id_to_params
+           |> FetchedBeneficiaries.requests()
+           |> json_rpc(json_rpc_named_arguments) do
+      {:ok, FetchedBeneficiaries.from_responses(responses, id_to_params)}
+    end
+  end
 
   @doc """
   Fetches the `t:Explorer.Chain.InternalTransaction.changeset/2` params.
