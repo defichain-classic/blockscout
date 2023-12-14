@@ -54,6 +54,10 @@ defmodule EthereumJSONRPC.Geth do
     end
   end
 
+  defp block_numbers_to_params_list(block_numbers) when is_list(block_numbers) do
+    Enum.map(block_numbers, &%{block_quantity: integer_to_quantity(&1)})
+  end
+
   defp correct_timeouts(json_rpc_named_arguments) do
     debug_trace_transaction_timeout =
       Application.get_env(:ethereum_jsonrpc, __MODULE__)[:debug_trace_transaction_timeout]
